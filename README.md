@@ -13,3 +13,6 @@ models
 
 
 other files are created automaticly by express.
+
+
+use postman test these API
