@@ -1,9 +1,9 @@
 let client = require('mongodb').MongoClient;
-let dbconfig = require('./dbconfig');
+// let dbconfig = require('./dbconfig');
 
-let dbString = dbconfig.path + ':' + dbconfig.port;
+// let dbString = dbconfig.path + ':' + dbconfig.port;
 
-function addData(db, data, cb)
+function addData(db, dbconfig, data, cb)
 {
     const schema = db.db(dbconfig.schema);
     const col = schema.collection(dbconfig.table);
@@ -18,7 +18,7 @@ function addData(db, data, cb)
 }
 
 
-function deleteData(db, data, cb)
+function deleteData(db, dbconfig, dbconfig, data, cb)
 {
     const schema = db.db(dbconfig.schema);
     const col = schema.collection(dbconfig.table);
@@ -33,7 +33,7 @@ function deleteData(db, data, cb)
 }
 
 
-function updateData(db, whereStr, data, cb)
+function updateData(db, dbconfig, whereStr, data, cb)
 {
     const schema = db.db(dbconfig.schema);
     const col = schema.collection(dbconfig.table);
@@ -48,7 +48,7 @@ function updateData(db, whereStr, data, cb)
 }
 
 
-function getData(db, whereStr, cb)
+function getData(db, dbconfig, whereStr, cb)
 {
     const schema = db.db(dbconfig.schema);
     const col = schema.collection(dbconfig.table);
@@ -62,7 +62,7 @@ function getData(db, whereStr, cb)
     });
 }
 
-function getAll(db, cb)
+function getAll(db, dbconfig, cb)
 {
     const schema = db.db(dbconfig.schema);
     const col = schema.collection(dbconfig.table);
@@ -78,45 +78,45 @@ function getAll(db, cb)
 
 
 module.exports = {
-    add : function(data, cb){
-        client.connect(dbString, function(err, db){
-            addData(db, data, function(result){
+    add : function(dbconfig, data, cb){
+        client.connect(dbconfig.dbString, function(err, db){
+            addData(db, dbconfig, data, function(result){
                 cb(result);
                 db.close();
             });
         });
     },
 
-    delete : function(data, cb){
-        client.connect(dbString, function(err, db){
-            deleteData(db, data, function(result){
+    delete : function(dbconfig, data, cb){
+        client.connect(dbconfig.dbString, function(err, db){
+            deleteData(db, dbconfig, data, function(result){
                 cb(result);
                 db.close();
             });
         });
     },
 
-    update : function(whereStr, data, cb){
-        client.connect(dbString, function(err, db){
-            updateData(db, whereStr, data, function(result){
+    update : function(dbconfig, whereStr, data, cb){
+        client.connect(dbconfig.dbString, function(err, db){
+            updateData(db, dbconfig, whereStr, data, function(result){
                 cb(result);
                 db.close();
             });
         });
     },
 
-    get : function(whereStr, cb){
-        client.connect(dbString, function(err, db){
-            getData(db, whereStr, function(result){
+    get : function(dbconfig, whereStr, cb){
+        client.connect(dbconfig.dbString, function(err, db){
+            getData(db, dbconfig, whereStr, function(result){
                 cb(result);
                 db.close();
             });
         });
     },
 
-    getAll : function(cb){
-        client.connect(dbString, function(err, db){
-            getAll(db, function(result){
+    getAll : function(dbconfig, cb){
+        client.connect(dbconfig.dbString, function(err, db){
+            getAll(db, dbconfig, function(result){
                 cb(result);
                 db.close();
             });
