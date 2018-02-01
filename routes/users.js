@@ -28,7 +28,7 @@ module.exports = function(app){
       console.log(result);
       res.send({"OK":1});
     });
-  })
+  });
 
   app.post('/user', function(req, res){
     let usr = new User(req.body.username, req.body.password, req.body.email);
