@@ -1,19 +1,13 @@
 let express = require('express');
 let User = require('../models/user');
 let userDao = require('../dao/userdao');
-let router = express.Router();
 
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
 
 module.exports = function(app){
   app.get('/user/:name', function(req, res){
     let name = req.params.name;
     let usr = new User(name,'','');
     userDao.getUser(usr, function(result){
-        //res.writeHead(200, {'Content-type' : 'text/html'});
       console.log(result);
       res.send(result);
     });
@@ -23,7 +17,6 @@ module.exports = function(app){
     let name = req.params.name;
     let usr = new User(name,'','');
     userDao.deleteUser(usr, function(result){
-        //res.writeHead(200, {'Content-type' : 'text/html'});
       console.log(result);
       res.send(result);
     });
