@@ -38,6 +38,10 @@ class Article
     getContent(){
         return this.content;
     }
+
+    toJSON(){
+        return {'title': this.title, 'author': this.author, 'time': this.time, 'content':this.content};
+    }
 }
 
 module.exports = Article;

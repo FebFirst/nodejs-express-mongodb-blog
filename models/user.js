@@ -29,6 +29,10 @@ class User
     getEmail(){
         return this.email;
     }
+
+    toJSON(){
+        return {"username": this.username, "password": this.password,"email": this.email};
+    }
 }
 
 

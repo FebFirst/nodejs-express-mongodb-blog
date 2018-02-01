@@ -6,7 +6,7 @@ let userdb = {'dbString': dbconfig.path + ':' + dbconfig.port, 'schema':dbconfig
 
 let UserDao = {
     addUser: function(user, cb){
-        let data = {"username": user.getUsername(), "password": user.getPassword(),"email": user.getEmail()};
+        let data = user.toJSON();
         let whereStr = {"email": user.email};
         dbutils.get(userdb, whereStr, function(result){
             if(result.length !== 0)
@@ -24,7 +24,7 @@ let UserDao = {
 
     updateUser: function(user, cb){
         let whereStr = {"email": user.getEmail()};
-        let data = {"username": user.getUsername(), "password": user.getPassword(),"email": user.getEmail()};
+        let data = user.toJSON();
         dbutils.update(userdb, whereStr, data, cb);
     },
 
