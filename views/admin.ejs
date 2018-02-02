@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>casualxg-Always foolish</title>
+		<meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="shortcut icon" type="image" href="images/coldkiller.jpg">
+		
+		<!-- Bootstrap Core CSS -->
+		<link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+
+		<!-- MetisMenu CSS -->
+		<link href="stylesheets/metisMenu.min.css" rel="stylesheet">
+	
+		<!-- Custom CSS -->
+		<link href="stylesheets/sb-admin-2.css" rel="stylesheet">
+	
+		<!--[if lte IE 8]><script src="javascripts/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="stylesheets/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="stylesheets/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="stylesheets/ie9.css" /><![endif]-->
+	</head>
+	<body class="left-sidebar">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<header id="header">
+                <h1 id="logo"><a href="index.html"><span>Always</span> FOOLISH</a></h1>
+                <nav id="nav">
+                    <ul>
+                        <li class="current"><a href="index.html">欢迎</a></li>
+                        <li class="submenu">
+                            <a href="#">选项</a>
+                            <ul>
+                                <li><a href="left-sidebar.html">所有博客</a></li>
+                                <li><a href="write.html">发布博客</a></li>
+                                <li><a href="contact.html">登出</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" class="button special">登录</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+			<!-- Main -->
+				<article id="main">
+
+					<header class="special container">
+						<span class="icon fa-bar-chart"></span>
+						<h2><strong><!--[-->用户列表<!--]--></strong></h2>
+					</header>
+
+					<!-- One -->
+						<section class="wrapper style4 container">
+							<div class="content">
+								<div class="table-responsive">
+									<table 	id="staff_list"
+											class="table table-bordered table-hover"
+											data-show-columns="true">
+
+										<thead>
+										<tr>
+											<th>ID</th>
+											<th>NAME</th>
+											<th>AGE</th>
+											<th>OPERATION</th>
+										</tr>
+										</thead>
+										<tbody>
+										<% for(var i = 0; i < 10; i ++){ %>
+											<tr>
+												<td>customer.id</td>
+												<td>customer.name</td>
+												<td>customer.email</td>
+												<td><a href="#" mce_href="#" onclick="">详情</a>
+													<a href="#" mce_href="#" onclick="">删除</a></td>
+											</tr>
+										<%}%>
+										</tbody>
+									</table>
+								</div>
+								<center><button class="btn btn-primary" data-toggle="modal" data-target="#userModal">新增数据</button></center>
+							</div>
+						</section>
+				</article>
+
+			<!-- Footer -->
+			<footer id="footer">
+
+                <ul class="icons">
+                    <li><a href="https://twitter.com/casualture" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://www.facebook.com/casualxg" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://github.com/FebFirst" class="icon circle fa-github"><span class="label">Github</span></a></li>
+                    <li><a href="https://www.youtube.com/channel/UC5mNVhrkWMFJ0vXFDXvBgqg?view_as=subscriber" class="icon circle fa-youtube"><span class="label">YouTube</span></a></li>
+                </ul>
+    
+                <ul class="copyright">
+                    <li>Always foolish</li>
+                </ul>
+    
+            </footer>
+		</div>
+
+			<!-- Scripts -->
+			<script src="javascripts/jquery.min.js"></script>
+			<script src="javascripts/jquery.dropotron.min.js"></script>
+			<script src="javascripts/jquery.scrolly.min.js"></script>
+			<script src="javascripts/jquery.scrollgress.min.js"></script>
+			<script src="javascripts/skel.min.js"></script>
+			<script src="javascripts/util.js"></script>
+			<!--[if lte IE 8]><script src="javascripts/ie/respond.min.js"></script><![endif]-->
+			<script src="javascripts/main.js"></script>
+
+			<!-- Bootstrap Core JavaScript -->
+			<script src="javascripts/bootstrap.min.js"></script>
+
+			<!-- Metis Menu Plugin JavaScript -->
+			<script src="javascripts/metisMenu.min.js"></script>
+
+			<!-- Custom Theme JavaScript -->
+			<script src="javascripts/sb-admin-2.js"></script>
+
+
+
+	</body>
+</html>

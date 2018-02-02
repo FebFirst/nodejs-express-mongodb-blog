@@ -35,6 +35,14 @@ let UserDao = {
         dbutils.get(userdb, whereStr, cb);
     },
 
+    getUserByEmail: function(user, cb){
+        if(!user.getEmail()){
+            return cb({"ERROR" : "Email is empty"});
+        }
+        let whereStr = {"email": user.getEmail()};
+        dbutils.get(userdb, whereStr, cb);
+    },
+
     getAllUsers: function(cb){
         dbutils.getAll(userdb, cb);
     }

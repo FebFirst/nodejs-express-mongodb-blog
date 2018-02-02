@@ -1,9 +1,24 @@
 var express = require('express');
-var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
-module.exports = router;
+module.exports = function(app){
+  app.get('/', function(req, res, next) {
+    res.render('index', { title: 'Express' });
+  });
+
+  app.get('/login.html', function(req, res){
+    res.render('login');
+  });
+
+  app.get('/write.html', function(req, res){
+    res.render('write');
+  });
+
+  app.get('/article.html',  function(req, res){
+    res.render('article');
+  });
+
+  app.get('/admin.html',  function(req, res){
+    res.render('admin');
+  });
+}
