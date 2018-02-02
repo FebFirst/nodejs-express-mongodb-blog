@@ -68,19 +68,19 @@
 										</tr>
 										</thead>
 										<tbody>
-										<% for(var i = 0; i < 10; i ++){ %>
+										<% for(var i = 0; i < user.length; i ++){ %>
 											<tr>
-												<td>customer.id</td>
-												<td>customer.name</td>
-												<td>customer.email</td>
+												<td><%=user[i].password%></td>
+												<td><%=user[i].username%></td>
+												<td><%=user[i].email%></td>
 												<td><a href="#" mce_href="#" onclick="">详情</a>
-													<a href="#" mce_href="#" onclick="">删除</a></td>
+													<a href="#" mce_href="#" onclick="deleteUser('<%=user[i].username%>')">删除</a></td>
 											</tr>
 										<%}%>
 										</tbody>
 									</table>
 								</div>
-								<center><button class="btn btn-primary" data-toggle="modal" data-target="#userModal">新增数据</button></center>
+								<center><button class="btn btn-primary" data-toggle="modal" data-target="#addusermodal">新增数据</button></center>
 							</div>
 						</section>
 				</article>
@@ -102,26 +102,138 @@
             </footer>
 		</div>
 
-			<!-- Scripts -->
-			<script src="javascripts/jquery.min.js"></script>
-			<script src="javascripts/jquery.dropotron.min.js"></script>
-			<script src="javascripts/jquery.scrolly.min.js"></script>
-			<script src="javascripts/jquery.scrollgress.min.js"></script>
-			<script src="javascripts/skel.min.js"></script>
-			<script src="javascripts/util.js"></script>
-			<!--[if lte IE 8]><script src="javascripts/ie/respond.min.js"></script><![endif]-->
-			<script src="javascripts/main.js"></script>
+		<div class="modal fade" id="addusermodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							添加数据
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row 50%">
+							<div class="12u">
+								<input type="text" name="username" placeholder="Name" id="username"/>
+							</div>
+						</div>
+						<div class="row 50%">
+							<div class="12u">
+								<input type="text" name="email" placeholder="Age" id="email"/>
+							</div>
+						</div>
+						<div class="row 50%">
+							<div class="12u">
+								<input type="text" name="password" placeholder="Student ID" id="password"/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<p id="msg"></p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" onclick="addUser()">提交更改</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
 
-			<!-- Bootstrap Core JavaScript -->
-			<script src="javascripts/bootstrap.min.js"></script>
 
-			<!-- Metis Menu Plugin JavaScript -->
-			<script src="javascripts/metisMenu.min.js"></script>
+		<div class="modal fade" id="infomodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								服务器信息
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="12u">
+									<p id="info"></p>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		<!-- Scripts -->
+		<script src="javascripts/jquery.min.js"></script>
+		<script src="javascripts/jquery.dropotron.min.js"></script>
+		<script src="javascripts/jquery.scrolly.min.js"></script>
+		<script src="javascripts/jquery.scrollgress.min.js"></script>
+		<script src="javascripts/skel.min.js"></script>
+		<script src="javascripts/util.js"></script>
+		<!--[if lte IE 8]><script src="javascripts/ie/respond.min.js"></script><![endif]-->
+		<script src="javascripts/main.js"></script>
 
-			<!-- Custom Theme JavaScript -->
-			<script src="javascripts/sb-admin-2.js"></script>
+		<!-- Bootstrap Core JavaScript -->
+		<script src="javascripts/bootstrap.min.js"></script>
+
+		<!-- Metis Menu Plugin JavaScript -->
+		<script src="javascripts/metisMenu.min.js"></script>
+
+		<!-- Custom Theme JavaScript -->
+		<script src="javascripts/sb-admin-2.js"></script>
 
 
+		<script>
+			function addUser(){
+				var name = document.getElementById("username").value;
+				var code = document.getElementById("password").value;
+				var email = document.getElementById("email").value;
+				var user = {email:email, password:code, username:name};
+				var url = "user";
+				$.ajax({
+					"type": "POST",
+					"url": url,
+					"contentType": "application/json",
+					"data": JSON.stringify(user),
+					"dataType": "json",
+					"success":function (info) {
+						console.log(JSON.stringify(info));
+						console.log(info.ERROR);
+						if(info.ERROR)
+							document.getElementById("msg").innerHTML = info.ERROR;
+						else{
+							window.location.href = "admin.html";
+							
+						}
+					}
+				});
+			}
+
+			function deleteUser(name){
+				var url = "user/" + name;
+				$.ajax({
+					"type": "DELETE",
+					"url": url,
+					"success":function (info) {
+						console.log(JSON.stringify(info));
+						console.log(info.ERROR);
+						if(info.ERROR){
+							$('#infomodal').modal('show');
+							document.getElementById("info").innerHTML = info.ERROR;
+						}
+						else{
+							window.location.href = "admin.html";
+							
+						}
+					}
+				});
+			}
+		</script>
 
 	</body>
 </html>

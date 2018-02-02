@@ -15,8 +15,8 @@ module.exports = function(app){
   });
 
   app.delete('/user/:name', function(req, res){
-    if(req.session.user.role !== 'admin'){
-      return res.send({"ERORR": "Unauthorized"});
+    if(!req.session.user){
+      return res.send({"ERROR": "Unauthorized"});
     }
     let name = req.params.name;
     let usr = new User(name,'','');
@@ -27,8 +27,8 @@ module.exports = function(app){
   });
 
   app.put('/user', function(req, res){
-    if(req.session.user.role !== 'admin'){
-      return res.send({"ERORR": "Unauthorized"});
+    if(!req.session.user){
+      return res.send({"ERROR": "Unauthorized"});
     }
     let usr = new User(req.body.username, req.body.password, req.body.email);
     userDao.updateUser(usr, function(result){
@@ -38,8 +38,8 @@ module.exports = function(app){
   });
 
   app.post('/user', function(req, res){
-    if(req.session.user.role !== 'admin'){
-      return res.send({"ERORR": "Unauthorized"});
+    if(!req.session.user){
+      return res.send({"ERROR": "Unauthorized"});
     }
     let usr = new User(req.body.username, req.body.password, req.body.email);
     userDao.addUser(usr, function(result){
