@@ -18,12 +18,12 @@ function addData(db, dbconfig, data, cb)
 }
 
 
-function deleteData(db, dbconfig, dbconfig, data, cb)
+function deleteData(db, dbconfig, data, cb)
 {
     const schema = db.db(dbconfig.schema);
     const col = schema.collection(dbconfig.table);
-
     col.remove(data, function(err, result){
+        
         if(err){
             return console.error(err);
         }

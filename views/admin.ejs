@@ -20,6 +20,15 @@
 		<link rel="stylesheet" href="stylesheets/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="stylesheets/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="stylesheets/ie9.css" /><![endif]-->
+
+		<style>
+			#infomodal, #updateusermpdal, #addusermodal {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translateX(-50%) translateY(-50%);
+			}
+		</style>
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -29,16 +38,22 @@
                 <h1 id="logo"><a href="index.html"><span>Always</span> FOOLISH</a></h1>
                 <nav id="nav">
                     <ul>
-                        <li class="current"><a href="index.html">欢迎</a></li>
+						<% if(!user){%>
+							<li class="current"><a href="index.html">欢迎</a></li>
+						<%}else{%>
+							<li class="current"><a href="index.html">欢迎, <%=user.username%></a></li>
+						<%}%>
                         <li class="submenu">
                             <a href="#">选项</a>
                             <ul>
                                 <li><a href="left-sidebar.html">所有博客</a></li>
                                 <li><a href="write.html">发布博客</a></li>
-                                <li><a href="contact.html">登出</a></li>
+                                <li><a href="logout">登出</a></li>
                             </ul>
-                        </li>
-                        <li><a href="#" class="button special">登录</a></li>
+						</li>
+						<%if(!user){%>
+						<li><a href="login.html" class="button special">登录</a></li>
+						<%}%>
                     </ul>
                 </nav>
             </header>
@@ -68,13 +83,13 @@
 										</tr>
 										</thead>
 										<tbody>
-										<% for(var i = 0; i < user.length; i ++){ %>
+										<% for(var i = 0; i < data.length; i ++){ %>
 											<tr>
-												<td><%=user[i].password%></td>
-												<td><%=user[i].username%></td>
-												<td><%=user[i].email%></td>
-												<td><a href="#" mce_href="#" onclick="">详情</a>
-													<a href="#" mce_href="#" onclick="deleteUser('<%=user[i].username%>')">删除</a></td>
+												<td><%=data[i].password%></td>
+												<td><%=data[i].username%></td>
+												<td><%=data[i].email%></td>
+												<td><a href="#" mce_href="#" onclick="updateModal('<%=data[i].username%>')">详情</a>
+													<a href="#" mce_href="#" onclick="deleteUser('<%=data[i].username%>')">删除</a></td>
 											</tr>
 										<%}%>
 										</tbody>
@@ -138,6 +153,47 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 						<button type="button" class="btn btn-primary" onclick="addUser()">提交更改</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+
+		<div class="modal fade" id="updateusermodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							修改数据
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row 50%">
+							<div class="12u">
+								<input type="text" name="username" placeholder="Name" id="up-username" readonly="readonly"/>
+							</div>
+						</div>
+						<div class="row 50%">
+							<div class="12u">
+								<input type="text" name="email" placeholder="Age" id="up-email"/>
+							</div>
+						</div>
+						<div class="row 50%">
+							<div class="12u">
+								<input type="text" name="password" placeholder="Student ID" id="up-password"/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<p id="up-msg"></p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" onclick="updateUser()">提交更改</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal -->
@@ -226,6 +282,56 @@
 							$('#infomodal').modal('show');
 							document.getElementById("info").innerHTML = info.ERROR;
 						}
+						else{
+							window.location.href = "admin.html";
+							
+						}
+					}
+				});
+			}
+
+
+			function updateModal(name){
+				var url = "user/" + name;
+				$.ajax({
+					"type": "GET",
+					"url": url,
+					"success":function(info){
+						if(info.ERROR){
+							$('#infomodal').modal('show');
+							document.getElementById("info").innerHTML = info.ERROR;
+						}
+						else{
+							console.log(JSON.stringify(info));
+							var nameinput = document.getElementById("up-username");
+							nameinput.value = name;
+							nameinput.readonly = 'readonly';
+							document.getElementById("up-password").value = info[0].password;
+							document.getElementById("up-email").value = info[0].email;
+							$('#updateusermodal').modal('show');
+						}
+					}
+				});
+			}
+
+
+			function updateUser(){
+				var name = document.getElementById("up-username").value;
+				var code = document.getElementById("up-password").value;
+				var email = document.getElementById("up-email").value;
+				var user = {email:email, password:code, username:name};
+				var url = "user";
+				$.ajax({
+					"type": "PUT",
+					"url": url,
+					"contentType": "application/json",
+					"data": JSON.stringify(user),
+					"dataType": "json",
+					"success":function (info) {
+						console.log(JSON.stringify(info));
+						console.log(info.ERROR);
+						if(info.ERROR)
+							document.getElementById("up-msg").innerHTML = info.ERROR;
 						else{
 							window.location.href = "admin.html";
 							

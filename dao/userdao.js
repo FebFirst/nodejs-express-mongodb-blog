@@ -44,7 +44,17 @@ let UserDao = {
     },
 
     getAllUsers: function(cb){
-        dbutils.getAll(userdb, cb);
+        dbutils.getAll(userdb, function(result){
+            if(result[0].username){
+                for(let i = 0; i < result.length; i ++){
+                    if(result[i].role === "admin"){
+                        result.splice(i,1);
+                    }
+                }
+            }
+
+            cb(result);
+        });
     }
 }
 

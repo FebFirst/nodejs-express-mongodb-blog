@@ -20,6 +20,7 @@ module.exports = function(app){
     }
     let name = req.params.name;
     let usr = new User(name,'','');
+    console.log(usr.toJSON());
     userDao.deleteUser(usr, function(result){
       console.log(result);
       res.send(result);
@@ -60,7 +61,9 @@ module.exports = function(app){
     userDao.getUserByEmail(usr, function(result){
       result = result[0];
       if(result.password === usr.getPassword()){
-        req.session.user = usr;
+        req.session.user = result;
+        if(result.role === "admin")
+          return res.redirect('admin.html');
         return res.redirect('/');
       }
       res.send({"ERROR" : "Invalid email or password"});
