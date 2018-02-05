@@ -14,35 +14,29 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<header id="header">
-					<h1 id="logo"><a href="index.html">Twenty <span>by HTML5 UP</span></a></h1>
-					<nav id="nav">
-						<ul>
-							<li class="current"><a href="index.html">Welcome</a></li>
-							<li class="submenu">
-								<a href="#">Layouts</a>
-								<ul>
-									<li><a href="left-sidebar.html">Left Sidebar</a></li>
-									<li><a href="right-sidebar.html">Right Sidebar</a></li>
-									<li><a href="no-sidebar.html">No Sidebar</a></li>
-									<li><a href="contact.html">Contact</a></li>
-									<li class="submenu">
-										<a href="#">Submenu</a>
-										<ul>
-											<li><a href="#">Dolore Sed</a></li>
-											<li><a href="#">Consequat</a></li>
-											<li><a href="#">Lorem Magna</a></li>
-											<li><a href="#">Sed Magna</a></li>
-											<li><a href="#">Ipsum Nisl</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li><a href="#" class="button special">Sign Up</a></li>
-						</ul>
-					</nav>
-				</header>
-
+			<header id="header">
+				<h1 id="logo"><a href="index.html"><span>Always</span> FOOLISH</a></h1>
+				<nav id="nav">
+					<ul>
+						<% if(!user){%>
+							<li class="current"><a href="index.html">欢迎</a></li>
+						<%}else{%>
+							<li class="current"><a href="index.html">欢迎, <%=user.username%></a></li>
+						<%}%>
+						<li class="submenu">
+							<a href="#">选项</a>
+							<ul>
+								<li><a href="article.html">所有博客</a></li>
+								<li><a href="write.html">发布博客</a></li>
+								<li><a href="logout">登出</a></li>
+							</ul>
+						</li>
+						<%if(!user){%>
+						<li><a href="login.html" class="button special">登录</a></li>
+						<%}%>
+					</ul>
+				</nav>
+			</header>
 			<!-- Main -->
 				<article id="main">
 

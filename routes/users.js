@@ -7,7 +7,7 @@ let userDao = require('../dao/userdao');
 module.exports = function(app){
   app.get('/user/:name', function(req, res){
     let name = req.params.name;
-    let usr = new User(name,'','');
+    let usr = new User(name,'','','','');
     userDao.getUser(usr, function(result){
       console.log(result);
       res.send(result);
@@ -18,20 +18,29 @@ module.exports = function(app){
     if(!req.session.user){
       return res.send({"ERROR": "Unauthorized"});
     }
-    let name = req.params.name;
-    let usr = new User(name,'','');
-    console.log(usr.toJSON());
-    userDao.deleteUser(usr, function(result){
-      console.log(result);
-      res.send(result);
+    let usr = new User('', '',req.session.user.email,'','');
+    userDao.getUserByEmail(usr, function(result){
+      result = result[0];
+      if(result.lastlogin === req.cookie["lastlogin"]){
+        let name = req.params.name;
+        usr = new User(name,'','','','');
+        console.log(usr.toJSON());
+        return userDao.deleteUser(usr, function(result){
+          console.log(result);
+          res.send(result);
+        });
+      }
+
+      return res.send({"ERROR": "Login expired"});
     });
+    
   });
 
   app.put('/user', function(req, res){
     if(!req.session.user){
       return res.send({"ERROR": "Unauthorized"});
     }
-    let usr = new User(req.body.username, req.body.password, req.body.email);
+    let usr = new User(req.body.username, req.body.password, req.body.email,"","");
     userDao.updateUser(usr, function(result){
       console.log(result);
       res.send({"OK":1});
@@ -42,7 +51,7 @@ module.exports = function(app){
     if(!req.session.user){
       return res.send({"ERROR": "Unauthorized"});
     }
-    let usr = new User(req.body.username, req.body.password, req.body.email);
+    let usr = new User(req.body.username, req.body.password, req.body.email,"","");
     userDao.addUser(usr, function(result){
       console.log(result);
       res.send(result);
@@ -56,12 +65,18 @@ module.exports = function(app){
     });
   });
 
+
   app.post('/login', function(req, res){
-    let usr = new User('', req.body.password, req.body.email);
+    let usr = new User('', req.body.password, req.body.email,'','');
     userDao.getUserByEmail(usr, function(result){
       result = result[0];
       if(result.password === usr.getPassword()){
         req.session.user = result;
+        let date = Date().toString();
+        usr = new User(result.username, result.password, result.email, result.role, date);
+        userDao.updateUser(usr, function(result){
+        });
+        res.cookie('lastlogin', date);
         if(result.role === "admin")
           return res.redirect('admin.html');
         return res.redirect('/');
@@ -69,6 +84,7 @@ module.exports = function(app){
       res.send({"ERROR" : "Invalid email or password"});
     });
   });
+
 
   app.get('/logout', function(req, res){
     req.session.user = null;

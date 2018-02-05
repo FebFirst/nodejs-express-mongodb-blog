@@ -12,7 +12,9 @@ module.exports = function(app){
   });
 
   app.get('/write.html', function(req, res){
-    res.render('write');
+    if(req.session.user)
+      return res.render('write');
+    return res.redirect('login.html');
   });
 
   app.get('/article.html',  function(req, res){
