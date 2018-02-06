@@ -25,6 +25,9 @@ module.exports = function(app){
     userDao.getAllUsers(function(result){
       res.render('admin', {data: result});
     });
-    
+  });
+
+  app.get('/chat.html', function(req, res){
+    res.render('chat');
   });
 }

@@ -77,8 +77,6 @@ module.exports = function(app){
         userDao.updateUser(usr, function(result){
         });
         res.cookie('lastlogin', date);
-        if(result.role === "admin")
-          return res.redirect('admin.html');
         return res.redirect('/');
       }
       res.send({"ERROR" : "Invalid email or password"});

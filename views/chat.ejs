@@ -1,0 +1,139 @@
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Contact - Twenty by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="stylesheets/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body class="contact">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<header id="header">
+                <h1 id="logo"><a href="/"><span>Always</span> FOOLISH</a></h1>
+                <nav id="nav">
+                    <ul>
+						<% if(!user){%>
+							<li class="current"><a href="/">欢迎</a></li>
+						<%}else{%>
+							<li class="current"><a href="/">欢迎, <%=user.username%></a></li>
+						<%}%>
+                        <li class="submenu">
+                            <a href="#">选项</a>
+                            <ul>
+                                <li><a href="article.html">所有博客</a></li>
+                                <li><a href="write.html">发布博客</a></li>
+                                <li><a href="logout">登出</a></li>
+                            </ul>
+						</li>
+						<%if(!user){%>
+						<li><a href="login.html" class="button special">登录</a></li>
+						<%}%>
+                    </ul>
+                </nav>
+            </header>
+
+			<!-- Main -->
+				<article id="main">
+
+					<header class="special container">
+						<span class="icon fa-envelope"></span>
+						<h2><!--[-->Get In Touch<!--]--></h2>
+						<p><!--[-->Talk to the world.<!--]--></p>
+					</header>
+
+					<!-- One -->
+						<section class="wrapper style4 special container 75%">
+
+							<!-- Content -->
+								<div class="content">
+									
+									<div class="row 50%">
+										<div class="12u">
+											<textarea name="messages" placeholder="messgaes" rows="10" id="messages"></textarea>
+										</div>
+									</div>
+									<div class="row 50%">
+											<div class="12u">
+												<input type="text" name="message" placeholder="Message" id="message"/>
+											</div>
+									</div>
+									<div class="row">
+										<div class="12u">
+											<ul class="buttons">
+												<li><button onclick="send()" class="btn-default" >Send Message</button></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+						</section>
+
+				</article>
+
+			<!-- Footer -->
+			<footer id="footer">
+
+                <ul class="icons">
+                    <li><a href="https://twitter.com/casualture" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://www.facebook.com/casualxg" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://github.com/FebFirst" class="icon circle fa-github"><span class="label">Github</span></a></li>
+                    <li><a href="https://www.youtube.com/channel/UC5mNVhrkWMFJ0vXFDXvBgqg?view_as=subscriber" class="icon circle fa-youtube"><span class="label">YouTube</span></a></li>
+                </ul>
+    
+                <ul class="copyright">
+                    <li>Always foolish</li>
+                </ul>
+    
+            </footer>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="javascripts/jquery.min.js"></script>
+		<script src="javascripts/jquery.dropotron.min.js"></script>
+		<script src="javascripts/jquery.scrolly.min.js"></script>
+		<script src="javascripts/jquery.scrollgress.min.js"></script>
+		<script src="javascripts/skel.min.js"></script>
+		<script src="javascripts/util.js"></script>
+		<!--[if lte IE 8]><script src="javascripts/ie/respond.min.js"></script><![endif]-->
+		<script src="javascripts/main.js"></script>
+
+		<script>
+			var ws = new WebSocket("ws://localhost:9999");
+			var data = [];
+			ws.onopen = function (e) {
+				console.log('Connection to server opened');
+			}
+
+			ws.onmessage = function(e){
+				var msg = JSON.parse(e.data);
+				if(data.length === 10){
+					data.splice(0,1);
+				}
+				console.log(msg);
+				var text = document.getElementById("messages");
+				//console.log(text.value);
+				text.value = "";
+				for (let i = 0 ; i < data.length; i ++){			
+					text.value = text.value + data[i].user + "    : " + data[i].message+ "\n";
+				}
+				text.value = text.value + msg.user + "    : " + msg.message+ "\n";
+				data.push(msg);
+				
+			}
+
+			function send() {
+				ws.send($('#message').val());
+				document.getElementById("message").value = "";
+			}
+		</script>
+
+	</body>
+</html>
