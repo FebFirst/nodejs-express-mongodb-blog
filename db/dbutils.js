@@ -76,6 +76,19 @@ function getAll(db, dbconfig, cb)
     });
 }
 
+function getSpecifyCol(db, dbconfig, whereStr, cb)
+{
+    const schema = db.db(dbconfig.schema);
+    const col = schema.collection(dbconfig.table);
+    col.find({}, whereStr).toArray(function(err, result){
+        if(err){
+            return console.error(err);
+        }
+
+        cb(result);
+    });
+}
+
 
 module.exports = {
     add : function(dbconfig, data, cb){
@@ -117,6 +130,15 @@ module.exports = {
     getAll : function(dbconfig, cb){
         client.connect(dbconfig.dbString, function(err, db){
             getAll(db, dbconfig, function(result){
+                cb(result);
+                db.close();
+            });
+        });
+    },
+
+    getSpecifyCol : function(dbconfig, whereStr, cb){
+        client.connect(dbconfig.dbString, function(err, db){
+            getSpecifyCol(db, dbconfig, whereStr, function(result){
                 cb(result);
                 db.close();
             });

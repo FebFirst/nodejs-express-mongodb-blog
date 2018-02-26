@@ -1,5 +1,6 @@
 let express = require('express');
 let userDao = require('../dao/userdao');
+let articleDao = require('../dao/articledao');
 
 
 module.exports = function(app){
@@ -12,13 +13,19 @@ module.exports = function(app){
   });
 
   app.get('/write.html', function(req, res){
-    if(req.session.user)
-      return res.render('write');
+    if(req.session.user){
+     
+      return res.render('write',{data: result});
+      
+    }
     return res.redirect('login.html');
   });
 
   app.get('/article.html',  function(req, res){
-    res.render('article');
+    articleDao.getSpecifyCol({author: 0, category: 0, content: 0}, function(result){
+      console.log(result);
+      return res.render('article',{data: result});
+    });
   });
 
   app.get('/admin.html',  function(req, res){

@@ -90,4 +90,7 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-ws;
+/**
+ *Uncomment this to enable the websocket chat room
+ */
+//ws;

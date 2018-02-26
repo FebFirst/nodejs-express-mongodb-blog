@@ -5,10 +5,23 @@
 		<title>casualxg-Always foolish</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+	
+		<!-- Bootstrap Core CSS -->
+		<link href="stylesheets/bootstrap.min.css" rel="stylesheet">
 		<!--[if lte IE 8]><script src="javascripts/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="stylesheets/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="stylesheets/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="stylesheets/ie9.css" /><![endif]-->
+		<style>
+			#infomodal{
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translateX(-50%) translateY(-50%);
+			}
+		</style>
+		
 	</head>
 	<body class="contact">
 		<div id="page-wrapper">
@@ -41,9 +54,9 @@
 				<article id="main">
 
 					<header class="special container">
-						<span class="icon fa-envelope"></span>
-						<h2><!--[-->Get In Touch<!--]--></h2>
-						<p><!--[-->Use the form below to give /dev/null a piece of your mind.<!--]--></p>
+						<span class="icon fa-linux"></span>
+						<h2><!--[-->留下来吧<!--]--></h2>
+						<p><!--[-->也许会永远失去ta~<!--]--></p>
 					</header>
 
 					<!-- One -->
@@ -51,33 +64,43 @@
 
 							<!-- Content -->
 								<div class="content">
-									<form>
-										<div class="row 50%">
-											<div class="6u 12u(mobile)">
-												<input type="text" name="name" placeholder="Name" />
-											</div>
-											<div class="6u 12u(mobile)">
-												<input type="text" name="email" placeholder="Email" />
-											</div>
+									
+									<div class="row 50%">
+										<div class="1u 12u(mobile)">
+											<label for="name">标题</label>
 										</div>
-										<div class="row 50%">
-											<div class="12u">
-												<input type="text" name="subject" placeholder="Subject" />
-											</div>
+										<div class="6u 12u(mobile)">
+											<input type="text" name="title" placeholder="Title" id="title" />
 										</div>
-										<div class="row 50%">
-											<div class="12u">
-												<textarea name="message" placeholder="Message" rows="7"></textarea>
-											</div>
+									</div>
+
+									<div class="row 50%">
+										<div class="1u 12u(mobile)">
+											<label for="name">分类</label>
 										</div>
-										<div class="row">
-											<div class="12u">
-												<ul class="buttons">
-													<li><input type="submit" class="special" value="Send Message" /></li>
-												</ul>
-											</div>
+										<div class="6u 12u(mobile)">
+											<select class="form-control" id="category">
+												<option>其他</option>
+												<option>学习</option>
+												<option>生活</option>
+												<option>工作</option>
+											</select>
 										</div>
-									</form>
+									</div>
+
+									<div class="row 50%">
+										<div class="12u">
+											<textarea name="content" placeholder="Content" rows="7" id="content"></textarea>
+										</div>
+									</div>
+									<div class="row">
+										<div class="12u">
+											<ul class="buttons">
+												<li><input type="submit" class="special" value="Send Message" onclick="addArticle()"/></li>
+											</ul>
+										</div>
+									</div>
+									
 								</div>
 
 						</section>
@@ -88,11 +111,10 @@
 				<footer id="footer">
 
 					<ul class="icons">
-						<li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span></a></li>
-						<li><a href="#" class="icon circle fa-github"><span class="label">Github</span></a></li>
-						<li><a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="https://twitter.com/casualture" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://www.facebook.com/casualxg" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="https://github.com/FebFirst" class="icon circle fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://www.youtube.com/channel/UC5mNVhrkWMFJ0vXFDXvBgqg?view_as=subscriber" class="icon circle fa-youtube"><span class="label">YouTube</span></a></li>
 					</ul>
 
 					<ul class="copyright">
@@ -103,6 +125,31 @@
 
 		</div>
 
+
+		<div class="modal fade" id="infomodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							服务器信息
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="12u">
+								<p id="info"></p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
 		<!-- Scripts -->
 			<script src="javascripts/jquery.min.js"></script>
 			<script src="javascripts/jquery.dropotron.min.js"></script>
@@ -112,6 +159,43 @@
 			<script src="javascripts/util.js"></script>
 			<!--[if lte IE 8]><script src="javascripts/ie/respond.min.js"></script><![endif]-->
 			<script src="javascripts/main.js"></script>
+
+			<!-- Bootstrap Core JavaScript -->
+			<script src="javascripts/bootstrap.min.js"></script>
+
+
+			<script>
+				function addArticle(){
+					var title = document.getElementById("title").value;
+					var category = $("#category option:selected").val();
+					var content = $("#content").val();
+					// var category = document.getElementById("category").value;
+					//var content = document.getElementById("content").innerHTML;
+					var data = {title:title, category:category, content:content};
+					var url = "article";
+
+					$.ajax({
+						"type": "POST",
+						"url": url,
+						"contentType": "application/json",
+						"data": JSON.stringify(data),
+						"dataType": "json",
+						"success":function (info) {
+							console.log(JSON.stringify(info));
+							console.log(info.ERROR);
+							if(info.ERROR){
+								document.getElementById("info").innerHTML = info.ERROR;
+								
+							}
+							else{
+								document.getElementById("info").innerHTML = "提交成功";
+								
+							}
+							$("#infomodal").modal("show");
+						}
+					});
+				}
+			</script>
 
 	</body>
 </html>
