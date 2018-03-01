@@ -13,18 +13,16 @@ module.exports = function(app){
   });
 
   app.get('/write.html', function(req, res){
-    if(req.session.user){
-     
-      return res.render('write',{data: result});
-      
+    if(req.session.user){   
+      return res.render('write');
     }
     return res.redirect('login.html');
   });
 
   app.get('/article.html',  function(req, res){
-    articleDao.getSpecifyCol({author: 0, category: 0, content: 0}, function(result){
+    articleDao.getSpecifyCol({'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5}, function(result){
       console.log(result);
-      return res.render('article',{data: result});
+      return res.render('article',{data: result, specifyArticle: -1});
     });
   });
 

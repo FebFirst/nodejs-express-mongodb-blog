@@ -8,12 +8,10 @@ let articledao = {
     addArticle: function(article, cb){
         let data = article.toJSON();
         let whereStr = {'title': article.title};
-        console.log("1");
         dbutils.get(articledb, whereStr, function(result){
             if(result.length !== 0){
                 return cb({'ERROR': 'Title exists'});
             }
-            console.log("2");
             dbutils.add(articledb, data, cb);
         });
     },

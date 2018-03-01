@@ -5,13 +5,13 @@
 		<title>casualxg-Always foolish</title>
 		<meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" type="image" href="images/coldkiller.jpg">
+		<link rel="shortcut icon" type="image" href="/images/coldkiller.jpg">
 		
 		<!-- Bootstrap Core CSS -->
-		<link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+		<link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
 
 		<!--[if lte IE 8]><script src="javascripts/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="stylesheets/main.css" />
+		<link rel="stylesheet" href="/stylesheets/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="stylesheets/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="stylesheets/ie9.css" /><![endif]-->
 	</head>
@@ -31,13 +31,13 @@
 						<li class="submenu">
 							<a href="#">选项</a>
 							<ul>
-								<li><a href="article.html">所有博客</a></li>
-								<li><a href="write.html">发布博客</a></li>
-								<li><a href="logout">登出</a></li>
+								<li><a href="/article.html">所有博客</a></li>
+								<li><a href="/write.html">发布博客</a></li>
+								<li><a href="/logout">登出</a></li>
 							</ul>
 						</li>
 						<%if(!user){%>
-						<li><a href="login.html" class="button special">登录</a></li>
+						<li><a href="/login.html" class="button special">登录</a></li>
 						<%}%>
 					</ul>
 				</nav>
@@ -71,7 +71,7 @@
 												<div class="list-group" >
 													<a href="#" class="list-group-item" style="border: 0px solid transparent"><h3>最近博客</h3></a>
 													<% for(var i = 0; i < data.length; i ++){ %>
-													<a href="<%=data[i].title%>" class="list-group-item" style="border: 0px solid transparent"><%=data[i].title%></a>
+													<a href="/article/<%=data[i].title%>" class="list-group-item" style="border: 0px solid transparent"><%=data[i].title%></a>
 													<%}%>
 													</div>
 												
@@ -96,11 +96,23 @@
 										<div class="content">
 											<section>
 												<!-- <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a> -->
+												
+												<% if (specifyArticle !== -1){%>
+												<header>
+													<h3><%=specifyArticle.title%></h3>
+												</header>
+												<p><%for(var i = 0; i < specifyArticle.content.length; i ++){%>
+													<%=specifyArticle.content[i]%><br/>
+													<%}%>
+												</p>
+											
+												<%} else{%>
 												<header>
 													<h3>欢迎来到Leo的小窝</h3>
 												</header>
-												<a href="#" class="image featured"><img src="images/sylm.jpg" alt="" /></a>
-												<p>哇！！！！上面的妹子好漂亮！！！！<%=data[0].content%></p>
+												<a href="#" class="image featured"><img src="/images/sylm.jpg" alt="" /></a>
+												<p>哇！！！！上面的妹子好漂亮！！！</p>
+												<%}%>
 											</section>
 										</div>
 
@@ -128,17 +140,17 @@
 		</div>
 
 			<!-- Scripts -->
-			<script src="javascripts/jquery.min.js"></script>
-			<script src="javascripts/jquery.dropotron.min.js"></script>
-			<script src="javascripts/jquery.scrolly.min.js"></script>
-			<script src="javascripts/jquery.scrollgress.min.js"></script>
-			<script src="javascripts/skel.min.js"></script>
-			<script src="javascripts/util.js"></script>
+			<script src="/javascripts/jquery.min.js"></script>
+			<script src="/javascripts/jquery.dropotron.min.js"></script>
+			<script src="/javascripts/jquery.scrolly.min.js"></script>
+			<script src="/javascripts/jquery.scrollgress.min.js"></script>
+			<script src="/javascripts/skel.min.js"></script>
+			<script src="/javascripts/util.js"></script>
 			<!--[if lte IE 8]><script src="javascripts/ie/respond.min.js"></script><![endif]-->
-			<script src="javascripts/main.js"></script>
+			<script src="/javascripts/main.js"></script>
 
 			<!-- Bootstrap Core JavaScript -->
-			<script src="javascripts/bootstrap.min.js"></script>
+			<script src="/javascripts/bootstrap.min.js"></script>
 
 
 
