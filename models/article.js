@@ -1,11 +1,16 @@
 class Article
 {
-    constructor(title, author, category, time, content){
+    constructor(url, title, author, category, time, content){
+        this.url = url;
         this.title = title;
         this.author = author;
         this.time = time;
         this.content = content;
         this.category = category;
+    }
+
+    setUrl(url){
+        this.url = url;
     }
 
     setTitle(title){
@@ -26,6 +31,10 @@ class Article
 
     setContent(content){
         this.content = content;
+    }
+
+    getUrl(){
+        return url;
     }
 
     getTitle(){
@@ -49,7 +58,7 @@ class Article
     }
 
     toJSON(){
-        return {'title': this.title, 'author': this.author, 'category': this.category, 'time': this.time, 'content':this.content};
+        return {'url': this.url, 'title': this.title, 'author': this.author, 'category': this.category, 'time': this.time, 'content':this.content};
     }
 }
 

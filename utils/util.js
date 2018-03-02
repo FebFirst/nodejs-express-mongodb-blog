@@ -23,7 +23,23 @@ let utils = {
         return res;
         // article = "<p>" + article;
         // article.replace(new RegExp("\n", "g"),"</p><p>");
-    }
+    },
+
+    authorization: function(req, res, next){
+        if(!req.session.user){
+          return res.send({"ERROR": "Unauthorized"});
+        }
+        next();
+    },
+
+    encodeTitle: function(title){
+        return title.replace(new RegExp(" ", "g"), "-");
+    },
+
+    decodeTitle: function(title){
+        console.log(title);
+        return title.replace(new RegExp("-", "g"), " ");
+    },
 }
 
 

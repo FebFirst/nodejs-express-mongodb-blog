@@ -2,13 +2,14 @@ let express = require('express');
 let session = require('express-session');
 let User = require('../models/user');
 let userDao = require('../dao/userdao');
+let utils = require('../utils/util')
 
-function authorization(req, res, next){
-  if(!req.session.user){
-    return res.send({"ERROR": "Unauthorized"});
-  }
-  next();
-}
+// function authorization(req, res, next){
+//   if(!req.session.user){
+//     return res.send({"ERROR": "Unauthorized"});
+//   }
+//   next();
+// }
 
 module.exports = function(app){
   app.get('/user/:name', function(req, res){
@@ -20,7 +21,7 @@ module.exports = function(app){
     });
   });
 
-  app.delete('/user/:name', authorization, function(req, res){
+  app.delete('/user/:name', utils.authorization, function(req, res){
     let usr = new User('', '',req.session.user.email,'','');
     userDao.getUserByEmail(usr, function(result){
       result = result[0];
@@ -39,7 +40,7 @@ module.exports = function(app){
     
   });
 
-  app.put('/user', authorization, function(req, res){
+  app.put('/user', utils.authorization, function(req, res){
     let usr = new User(req.body.username, req.body.password, req.body.email,"","");
     userDao.updateUser(usr, function(result){
       console.log(result);
@@ -47,7 +48,7 @@ module.exports = function(app){
     });
   });
 
-  app.post('/user', authorization, function(req, res){
+  app.post('/user', utils.authorization, function(req, res){
     let usr = new User(req.body.username, req.body.password, req.body.email,"","");
     userDao.addUser(usr, function(result){
       console.log(result);

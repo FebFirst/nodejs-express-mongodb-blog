@@ -7,28 +7,29 @@ let articledb = {'dbString': dbconfig.path + ':' + dbconfig.port, 'schema':dbcon
 let articledao = {
     addArticle: function(article, cb){
         let data = article.toJSON();
-        let whereStr = {'title': article.title};
-        dbutils.get(articledb, whereStr, function(result){
-            if(result.length !== 0){
-                return cb({'ERROR': 'Title exists'});
-            }
-            dbutils.add(articledb, data, cb);
-        });
+        let whereStr = {'url': article.url};
+        dbutils.add(articledb, data, cb);
+        // dbutils.get(articledb, whereStr, function(result){
+        //     if(result.length !== 0){
+        //         return cb({'ERROR': 'Title exists'});
+        //     }
+        //     dbutils.add(articledb, data, cb);
+        // });
     },
 
     deleteArticle: function(article, cb){
-        let whereStr = {'title': article.title};
+        let whereStr = {'url': article.url};
         dbutils.delete(articledb, whereStr, cb);
     },
 
     updateArticle: function(article, cb){
-        let whereStr = {'title': article.title};
+        let whereStr = {'url': article.url};
         let data = article.toJSON();
         dbutils.update(articledb, whereStr, data, cb);
     },
 
     getArticle: function(article, cb){
-        let whereStr = {'title': article.title};
+        let whereStr = {'url': article.url};
         dbutils.get(articledb, whereStr, cb);
     },
 
