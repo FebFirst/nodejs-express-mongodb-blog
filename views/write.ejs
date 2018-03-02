@@ -181,17 +181,15 @@
 						"data": JSON.stringify(data),
 						"dataType": "json",
 						"success":function (info) {
-							console.log(JSON.stringify(info));
-							console.log(info.ERROR);
 							if(info.ERROR){
 								document.getElementById("info").innerHTML = info.ERROR;
-								
+								$("#infomodal").modal("show");
 							}
 							else{
-								document.getElementById("info").innerHTML = "提交成功";
+								window.location.href = info.redirectUrl;
 								
 							}
-							$("#infomodal").modal("show");
+							
 						}
 					});
 				}

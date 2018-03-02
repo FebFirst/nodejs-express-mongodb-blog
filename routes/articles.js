@@ -13,6 +13,7 @@ module.exports = function(app){
           let articleData = {title: result[0].title, content: result[0].content.split("\n")};
           console.log(articleData);
           articleDao.getSpecifyCol({'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5}, function(resl){
+            console.log("wtf");
             return res.render('article',{data: resl, specifyArticle: articleData});
           });
           //res.render("artlcle", {specifyArticle: articleData});
@@ -42,7 +43,7 @@ module.exports = function(app){
         console.log(art.toJSON());
         articleDao.addArticle(art, function(result){
             console.log(result);
-            res.redirect('/article/' + url);
+            res.send({"redirectUrl":"/article/" + url});
             //res.send(result);
         });
     });
