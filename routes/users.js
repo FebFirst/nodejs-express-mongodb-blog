@@ -1,4 +1,3 @@
-let express = require('express');
 let session = require('express-session');
 let User = require('../models/user');
 let userDao = require('../dao/userdao');

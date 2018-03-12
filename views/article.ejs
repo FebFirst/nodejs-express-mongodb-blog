@@ -81,10 +81,10 @@
 												<!-- <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a> -->
 												<div class="list-group" >
 													<a href="#" class="list-group-item" style="border: 0px solid transparent"><h3>博客分类</h3></a>
-													<a href="#" class="list-group-item" style="border: 0px solid transparent">学习</a>
-													<a href="#" class="list-group-item" style="border: 0px solid transparent">生活</a>
-													<a href="#" class="list-group-item" style="border: 0px solid transparent">工作</a>
-													<a href="#" class="list-group-item" style="border: 0px solid transparent">其他</a>
+													<a href="/article/category/study" class="list-group-item" style="border: 0px solid transparent">学习</a>
+													<a href="/article/category/life" class="list-group-item" style="border: 0px solid transparent">生活</a>
+													<a href="/article/category/work" class="list-group-item" style="border: 0px solid transparent">工作</a>
+													<a href="/article/category/other" class="list-group-item" style="border: 0px solid transparent">其他</a>
 												</div>
 											</section>
 										</div>
@@ -97,21 +97,25 @@
 											<section>
 												<!-- <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a> -->
 												
-												<% if (specifyArticle !== -1){%>
+												<% if (articles !== -1){for (index in articles){%>
+													
 												<header>
-													<h3><%=specifyArticle.title%></h3>
+													<a href="/article/<%=articles[index].url%>"><h3><%=articles[index].title%></h3></a>
+													
+													<br/>
 												</header>
-												<p><%for(var i = 0; i < specifyArticle.content.length; i ++){%>
-													<%=specifyArticle.content[i]%><br/>
+												<p><%for(var i = 0; i < articles[index].content.length; i ++){%>
+													<%=articles[index].content[i]%><br/>
 													<%}%>
 												</p>
-											
-												<%} else{%>
+												<h5 style="text-align: right"><%=articles[index].time%></h5>
+												<br/><br/>
+												<%}} else{%>
 												<header>
 													<h3>欢迎来到Leo的小窝</h3>
 												</header>
 												<a href="#" class="image featured"><img src="/images/sylm.jpg" alt="" /></a>
-												<p>哇！！！！上面的妹子好漂亮！！！</p>
+												<p>哇！！！！石原小姐姐好漂亮！！！</p>
 												<%}%>
 											</section>
 										</div>

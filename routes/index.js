@@ -1,4 +1,3 @@
-let express = require('express');
 let userDao = require('../dao/userdao');
 let articleDao = require('../dao/articledao');
 
@@ -20,9 +19,9 @@ module.exports = function(app){
   });
 
   app.get('/article.html',  function(req, res){
-    articleDao.getSpecifyCol({'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5}, function(result){
+    articleDao.getSpecifyCol({}, {'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5}, function(result){
       console.log(result);
-      return res.render('article',{data: result, specifyArticle: -1});
+      return res.render('article',{data: result, articles: -1});
     });
   });
 

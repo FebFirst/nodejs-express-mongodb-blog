@@ -76,15 +76,14 @@ function getAll(db, dbconfig, cb)
     });
 }
 
-function getSpecifyCol(db, dbconfig, whereStr, cb)
+function getSpecifyCol(db, dbconfig, whereStr, colStr, cb)
 {
     const schema = db.db(dbconfig.schema);
     const col = schema.collection(dbconfig.table);
-    col.find({}, whereStr).toArray(function(err, result){
+    col.find(whereStr, colStr).toArray(function(err, result){
         if(err){
             return console.error(err);
         }
-
         cb(result);
     });
 }
@@ -137,9 +136,9 @@ module.exports = {
         });
     },
 
-    getSpecifyCol : function(dbconfig, whereStr, cb){
+    getSpecifyCol : function(dbconfig, whereStr,colStr,  cb){
         client.connect(dbconfig.dbString, function(err, db){
-            getSpecifyCol(db, dbconfig, whereStr, function(result){
+            getSpecifyCol(db, dbconfig, whereStr,colStr, function(result){
                 cb(result);
                 db.close();
             });
