@@ -1,17 +1,27 @@
 # nodejs-express-mongodb-sample
 A blog based on nodejs
 
+
 db
+
 -dbconfig.js  database configration file
+
 -dbutils.js   database connection tool
 
+
 dao
+
 -userdao.js   JAVA style database access object file
 
+
 services
+
 -articleService.js  JAVA style service file
 
+
+
 models
+
 -user.js      user model class
 
 
@@ -25,6 +35,7 @@ git clone https://github.com/FebFirst/nodejs-express-mongodb-sample.git
 cd this directory then type command below:
 
 npm install
+
 npm start
 
 
