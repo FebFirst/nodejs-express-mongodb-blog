@@ -34,7 +34,6 @@ module.exports = {
 					for(art in result){
 						arts.push({title: result[art].title,time:result[art].time, url:result[art].url, content: result[art].content.split("\n")});
 					}
-					//console.log(arts);
 					articleDao.getSpecifyCol({}, filter, function(resl){
 						resolve({data: resl,articles: arts});
 					});
@@ -46,6 +45,22 @@ module.exports = {
 	addArticle: function(art){
 		return new Promise(function(resolve){
 			articleDao.addArticle(art, function(result){
+				resolve(result);
+			});
+		}).timeout(3000);
+	},
+
+	updateArticle: function(art){
+		return new Promise(function(resolve){
+			articleDao.updateArticle(art, function(result){
+				resolve(result);
+			});
+		}).timeout(3000);
+	},
+
+	deleteArticle: function(art){
+		return new Promise(function(resolve){
+			articleDao.deleteArticle(art, function(result){
 				resolve(result);
 			});
 		}).timeout(3000);

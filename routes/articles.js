@@ -1,23 +1,9 @@
 let Article = require('../models/article');
-let articleDao = require('../dao/articledao');
 let utils = require('../utils/util');
 let articleService = require('../services/articleService');
 
 module.exports = function(app){
     app.get('/article/:url', function(req, res, next){
-        // let art = new Article(parseInt(req.params.url), '', '', '', '','');
-        // articleDao.getArticle(art, function(result){
-        //   if(result.length === 0){
-        //     return res.redirect("/");
-        //   }
-        //   let articleData = {title: result[0].title, content: result[0].content.split("\n")};
-        //   //console.log(articleData);
-        //   articleDao.getSpecifyCol({'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5}, function(resl){
-        //     //console.log("wtf");
-        //     return res.render('article',{data: resl, specifyArticle: articleData});
-        //   });
-        //   //res.render("artlcle", {specifyArticle: articleData});
-        // });
         let url = req.params.url;
         articleService.getArticle(url).then(function(data){
           res.render('article' , data);
@@ -38,17 +24,19 @@ module.exports = function(app){
     
     app.delete('/article/:url', utils.authorization, function(req, res){
         let art = new Article(parseInt(req.params.url), '', '', '','','');
-        articleDao.deleteArticle(art, function(result){
-          console.log(result);
+        articleService.deleteArticle(art).then(function(result){
           res.send(result);
+        }).catch(function(err){
+          next(err);
         });
       });
     
     app.put('/article', utils.authorization, function(req, res){
         let art = new Article(parseInt(req.body.url), req.body.title, req.session.user.username, req.body.category, utils.dateNow(), req.body.content);
-        articleDao.updateArticle(art, function(result){
-            console.log(result);
-            res.send(result);
+        articleService.updateArticle(art).then(function(result){
+          res.send(result);
+        }).catch(function(err){
+          next(err);
         });
       });
     
