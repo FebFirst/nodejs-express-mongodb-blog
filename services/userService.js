@@ -44,5 +44,37 @@ module.exports = {
 				}
 			});
 		}).timeout(3000);
+	},
+
+	getUserByName: function(usr){
+		return new Promise(function(resolve){
+			userDao.getUser(usr, function(result){
+				resolve(result);
+			});
+		}).timeout(3000);
+	},
+
+	updateUser: function(usr){
+		return new Promise(function(resolve){
+			userDao.updateUser(usr, function(result){
+				resolve(result);
+			});
+		}).timeout(3000);
+	},
+
+	addUser: function(usr){
+		return new Promise(function(resolve){
+			userDao.addUser(usr, function(result){
+				resolve(result);
+			});
+		}).timeout(3000);
+	},
+
+	getAllUsers: function(){
+		return new Promise(function(resolve){
+			userDao.getAllUsers(function(result){
+				resolve(result);
+			});
+		}).timeout(3000);
 	}
 }
