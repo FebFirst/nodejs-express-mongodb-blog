@@ -10,7 +10,7 @@ const Promise = require('bluebird');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
-var upload = require('./routes/files');
+var files = require('./routes/files');
 
 var app = express();
 
@@ -44,7 +44,7 @@ app.use(function(req, res, next){
 index(app);
 users(app);
 articles(app);
-upload(app);
+files(app);
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {

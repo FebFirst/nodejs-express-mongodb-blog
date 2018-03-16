@@ -35,8 +35,13 @@ module.exports = function(app){
 	});
 
 
-	app.get("image/:url", function(req, res, next){
-
+	app.get("/image/:name", function(req, res, next){
+		fileService.getFile(req.params.name).then(function(result){
+			// res.download(result.path, result.name);
+			res.send(result);
+		}).catch(function(err){
+			next(err);
+		});
 	});
 
 }

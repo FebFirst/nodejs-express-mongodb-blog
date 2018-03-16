@@ -27,6 +27,19 @@ module.exports = {
 				reject(err);
 			});	
 		});
-		
+	},
+
+	getFile: function(name){
+		let file = new File(name, '', '', '');
+		return new Promise(function(resolve, reject){
+			fileDao.getFile(file, function(result){
+				if(result.length === 0){
+					reject(new Error("Not found"));
+				}else{
+					let res = fs.readFileSync(result[0].path);
+					resolve(res);
+				}
+			});
+		}).timeout(3000);
 	}
 }

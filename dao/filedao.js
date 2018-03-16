@@ -29,8 +29,8 @@ let fileDao = {
 
     getFile: function(file, cb){
         if(!file.name)
-            return cb({"ERROR" : "Usename is empty"});
-        let whereStr = {"filename": file.name};
+            return cb({"ERROR" : "Filename is empty"});
+        let whereStr = {"name": file.name};
         dbutils.get(filedb, whereStr, cb);
     },
 

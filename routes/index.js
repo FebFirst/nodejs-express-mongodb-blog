@@ -35,6 +35,10 @@ module.exports = function(app){
     res.render('chat');
   });
 
+  app.get('/image.html', function(req, res){
+    res.render('image');
+  });
+
   app.get('/upload.html', function(req, res){
     if(req.session.user){   
       return res.render('upload');
