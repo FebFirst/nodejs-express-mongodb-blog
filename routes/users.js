@@ -24,7 +24,7 @@ module.exports = function(app){
     
   });
 
-  app.put('/user', utils.authorization, function(req, res){
+  app.put('/user', utils.authorization, function(req, res, next){
     let usr = new User(req.body.username, req.body.password, req.body.email,"","");
     userService.updateUser(usr).then(function(result){
       res.send({"OK":1});
@@ -33,7 +33,7 @@ module.exports = function(app){
     });
   });
 
-  app.post('/user', utils.authorization, function(req, res){
+  app.post('/user', utils.authorization, function(req, res, next){
     let usr = new User(req.body.username, req.body.password, req.body.email,"","");
     userService.addUser(usr).then(function(result){
       res.send(result);
@@ -42,7 +42,7 @@ module.exports = function(app){
     });
   });
 
-  app.get('/user', function(req, res){
+  app.get('/user', function(req, res, next){
     userService.getAllUsers().then(function(result){
       res.send(result);
     }).catch(function(err){

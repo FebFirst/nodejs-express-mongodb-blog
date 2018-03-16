@@ -4,7 +4,7 @@ let dbconfig = require('../db/dbconfig');
 let userdb = {'dbString': dbconfig.path + ':' + dbconfig.port, 'schema':dbconfig.schema, 'table':dbconfig.usertable};
 
 
-let UserDao = {
+let userDao = {
     addUser: function(user, cb){
         let data = user.toJSON();
         let whereStr = {"email": user.email};
@@ -58,4 +58,4 @@ let UserDao = {
     }
 }
 
-module.exports = UserDao;
+module.exports = userDao;

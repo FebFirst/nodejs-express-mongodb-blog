@@ -34,4 +34,11 @@ module.exports = function(app){
   app.get('/chat.html', function(req, res){
     res.render('chat');
   });
+
+  app.get('/upload.html', function(req, res){
+    if(req.session.user){   
+      return res.render('upload');
+    }
+    return res.redirect('login.html');
+  });
 }

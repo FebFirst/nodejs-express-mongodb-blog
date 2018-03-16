@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>casualxg-Always foolish</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="shortcut icon" type="image" href="images/coldkiller.jpg">
+	
+		<!-- Bootstrap Core CSS -->
+		<link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+		<!--[if lte IE 8]><script src="javascripts/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="stylesheets/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="stylesheets/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="stylesheets/ie9.css" /><![endif]-->
+		<style>
+			#infomodal{
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translateX(-50%) translateY(-50%);
+			}
+		</style>
+		
+	</head>
+	<body class="contact">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<header id="header">
+				<h1 id="logo"><a href="/"><span>Always</span> FOOLISH</a></h1>
+				<nav id="nav">
+					<ul>
+						<% if(!user){%>
+							<li class="current"><a href="/">欢迎</a></li>
+						<%}else{%>
+							<li class="current"><a href="/">欢迎, <%=user.username%></a></li>
+						<%}%>
+						<li class="submenu">
+							<a href="#">选项</a>
+							<ul>
+								<li><a href="article.html">所有博客</a></li>
+								<li><a href="write.html">发布博客</a></li>
+								<li><a href="logout">登出</a></li>
+							</ul>
+						</li>
+						<%if(!user){%>
+						<li><a href="login.html" class="button special">登录</a></li>
+						<%}%>
+					</ul>
+				</nav>
+			</header>
+			<!-- Main -->
+				<article id="main">
+
+					<header class="special container">
+						<span class="icon fa-linux"></span>
+						<h2><!--[-->留下来吧<!--]--></h2>
+						<p><!--[-->也许会永远失去ta~<!--]--></p>
+					</header>
+
+					<!-- One -->
+						<section class="wrapper style4 special container 75%">
+
+							<!-- Content -->
+								<div class="content">
+									
+
+									<div class="row 50%">
+										<div class="1u 12u(mobile)">
+											<label for="name">文件</label>
+										</div>
+										<div class="6u 12u(mobile)">
+											<input type="file" name="file" placeholder="选择文件" id="file" />
+										</div>
+									</div>
+
+									<div class="row 50%">
+										<div class="12u">
+											<textarea name="content" placeholder="Description" rows="7" id="content"></textarea>
+										</div>
+									</div>
+									<div class="row">
+										<div class="12u">
+											<ul class="buttons">
+												<li><input type="submit" class="special" value="上传" onclick="addFile()"/></li>
+											</ul>
+										</div>
+									</div>
+									
+								</div>
+
+						</section>
+
+				</article>
+
+			<!-- Footer -->
+				<footer id="footer">
+
+					<ul class="icons">
+						<li><a href="https://twitter.com/casualture" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://www.facebook.com/casualxg" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="https://github.com/FebFirst" class="icon circle fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://www.youtube.com/channel/UC5mNVhrkWMFJ0vXFDXvBgqg?view_as=subscriber" class="icon circle fa-youtube"><span class="label">YouTube</span></a></li>
+					</ul>
+
+					<ul class="copyright">
+						<li>Copyright &copy; 2018.leoxiong.cn All rights reserved.</li>
+					</ul>
+
+				</footer>
+
+		</div>
+
+
+		<div class="modal fade" id="infomodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							服务器信息
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="12u">
+								<p id="info"></p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+		<!-- Scripts -->
+			<script src="javascripts/jquery.min.js"></script>
+			<script src="javascripts/jquery.dropotron.min.js"></script>
+			<script src="javascripts/jquery.scrolly.min.js"></script>
+			<script src="javascripts/jquery.scrollgress.min.js"></script>
+			<script src="javascripts/skel.min.js"></script>
+			<script src="javascripts/util.js"></script>
+			<!--[if lte IE 8]><script src="javascripts/ie/respond.min.js"></script><![endif]-->
+			<script src="javascripts/main.js"></script>
+
+			<!-- Bootstrap Core JavaScript -->
+			<script src="javascripts/bootstrap.min.js"></script>
+
+
+			<script>
+				function addFile(){
+					var img = document.querySelector("#file").files[0];
+					if(!img){
+						document.getElementById("info").innerHTML = "请选择一个文件";
+						$("#infomodal").modal("show");
+						return;
+					}
+					var content = $("#content").val();
+					// var category = document.getElementById("category").value;
+					//var content = document.getElementById("content").innerHTML;
+					var data = new FormData();
+					console.log(typeof img);
+					console.log(img);
+					data.append("file", img);
+					data.append("content", content);
+					console.log(data.getAll("file"));
+					var url = "/image/upload";
+
+					$.ajax({
+						"type": "POST",
+						"url": url,
+						"contentType": false,
+            "processData": false,
+						"data": data,
+						"success":function (info) {
+							if(info.ERROR){
+								document.getElementById("info").innerHTML = info.ERROR;
+								$("#infomodal").modal("show");
+							}
+							else{
+								//window.location.href = info.redirectUrl;
+								
+							}
+							
+						}
+					});
+				}
+			</script>
+
+	</body>
+</html>

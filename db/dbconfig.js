@@ -4,5 +4,6 @@ module.exports = {
     schema : 'webapp',
     usertable : 'user',
     articletable: 'article',
+    filetable: 'file',
     passwd: ''
 }

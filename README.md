@@ -39,4 +39,4 @@ npm install
 npm start
 
 
-Before that you should modify dbconfig.js to suit your own db settings.
+Before that you should modify dbconfig.js to match your own db settings.
