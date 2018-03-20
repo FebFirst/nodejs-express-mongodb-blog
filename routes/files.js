@@ -15,7 +15,7 @@ const utils = require('../utils/util');
 // });
 
 let upload = multer({
-	dest: 'upload/'
+	dest: 'upload/tmp'
 });
 
 module.exports = function(app){
