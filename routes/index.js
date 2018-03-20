@@ -1,8 +1,6 @@
 const userService = require('../services/userService');
 const articleService = require('../services/articleService');
 const fileService = require('../services/fileService');
-let userDao = require('../dao/userdao');
-let articleDao = require('../dao/articledao');
 
 
 module.exports = function(app){

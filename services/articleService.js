@@ -48,7 +48,7 @@ module.exports = {
 				if(resl.ERROR){
 					reject(new Error(resl.ERROR));
 				}else{
-					resolve({data: resl,articles: arts});
+					resolve({data: resl,articles: - 1});
 				}
 			});
 		});
