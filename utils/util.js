@@ -2,19 +2,19 @@ const fs = require('fs');
 const path = require('path');
 const Promise = require('bluebird');
 
-const filepath = "upload/";
+// const filepath = "upload/";
 
-function newdir(dir, cb){
-	fs.exists(dir, function(exists){
-		if(exists){
-			return cb(exists);
-		}else{
-			fs.mkdirSync(dir, function(err){
-				cb();
-			});
-		}
-	});
-}
+// function newdir(dir, cb){
+// 	fs.exists(dir, function(exists){
+// 		if(exists){
+// 			return cb(exists);
+// 		}else{
+// 			fs.mkdirSync(dir, function(err){
+// 				cb();
+// 			});
+// 		}
+// 	});
+// }
 
 function mkdirsSync(dirname) {
 	if (fs.existsSync(dirname)) {
