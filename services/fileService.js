@@ -11,7 +11,7 @@ module.exports = {
 		let tmpPath = file.path;
 		let path = utils.dateString();
 		return new Promise(function(resolve, reject){
-			utils.mkdir(path).then(function(){
+			if(utils.mkdir(path)){
 				let date = new Date();
 				let fname = file.originalname.split(".");
 				fname = fname[fname.length -1];
@@ -23,9 +23,9 @@ module.exports = {
 				fileDao.addFile(dbfile, function(result){
 					resolve(result);
 				});
-			}).catch(function(err){
+			}else{
 				reject(err);
-			});	
+			}	
 		});
 	},
 
