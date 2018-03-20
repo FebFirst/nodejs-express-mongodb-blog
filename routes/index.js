@@ -1,3 +1,6 @@
+const userService = require('../services/userService');
+const articleService = require('../services/articleService');
+const fileService = require('../services/fileService');
 let userDao = require('../dao/userdao');
 let articleDao = require('../dao/articledao');
 
@@ -18,16 +21,20 @@ module.exports = function(app){
     return res.redirect('login.html');
   });
 
-  app.get('/article.html',  function(req, res){
-    articleDao.getSpecifyCol({}, {'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5}, function(result){
-      console.log(result);
-      return res.render('article',{data: result, articles: -1});
+  app.get('/article.html',  function(req, res, next){
+    let filter = {'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5};
+    articleService.getSpecifyCol({}, filter).then(function(result){
+      res.render('article',{data: result, articles: -1});
+    }).catch(function(err){
+      next(err);
     });
   });
 
-  app.get('/admin.html',  function(req, res){
-    userDao.getAllUsers(function(result){
+  app.get('/admin.html',  function(req, res, next){
+    userService.getAllUsers().then(function(result){
       res.render('admin', {data: result});
+    }).catch(function(err){
+      next(err);
     });
   });
 
@@ -35,8 +42,13 @@ module.exports = function(app){
     res.render('chat');
   });
 
-  app.get('/image.html', function(req, res){
-    res.render('image');
+  app.get('/image.html', function(req, res, next){
+    fileService.getFileDescription('image').then(function(result){
+      res.render('image', {images: result});
+    }).catch(function(err){
+      res.render('image', {images: []});
+    });
+   
   });
 
   app.get('/upload.html', function(req, res){

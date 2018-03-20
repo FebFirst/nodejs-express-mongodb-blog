@@ -5,57 +5,57 @@ let userdb = {'dbString': dbconfig.path + ':' + dbconfig.port, 'schema':dbconfig
 
 
 let userDao = {
-    addUser: function(user, cb){
-        let data = user.toJSON();
-        let whereStr = {"email": user.email};
-        dbutils.get(userdb, whereStr, function(result){
-            if(result.length !== 0)
-                return cb({"ERROR": "User exists!"});
-            dbutils.add(userdb, data, cb);
-        });
-        
-    },
+	addUser: function(user, cb){
+		let data = user.toJSON();
+		let whereStr = {"email": user.email};
+		dbutils.get(userdb, whereStr, function(result){
+			if(result.length !== 0)
+				return cb({"ERROR": "User exists!"});
+			dbutils.add(userdb, data, cb);
+		});
+			
+	},
 
-    deleteUser: function(user, cb){
-       // let whereStr = {"email": user.email};
-        let whereStr = {"username": user.getUsername()};
-        dbutils.delete(userdb, whereStr, cb);
-    },
+	deleteUser: function(user, cb){
+		// let whereStr = {"email": user.email};
+		let whereStr = {"username": user.getUsername()};
+		dbutils.delete(userdb, whereStr, cb);
+	},
 
-    updateUser: function(user, cb){
-        let whereStr = {"email": user.getEmail()};
-        let data = user.toJSON();
-        dbutils.update(userdb, whereStr, data, cb);
-    },
+	updateUser: function(user, cb){
+		let whereStr = {"email": user.getEmail()};
+		let data = user.toJSON();
+		dbutils.update(userdb, whereStr, data, cb);
+	},
 
-    getUser: function(user, cb){
-        if(!user.getUsername())
-            return cb({"ERROR" : "Usename is empty"});
-        let whereStr = {"username": user.getUsername()};
-        dbutils.get(userdb, whereStr, cb);
-    },
+	getUser: function(user, cb){
+		if(!user.getUsername())
+			return cb({"ERROR" : "Usename is empty"});
+		let whereStr = {"username": user.getUsername()};
+		dbutils.get(userdb, whereStr, cb);
+	},
 
-    getUserByEmail: function(user, cb){
-        if(!user.getEmail()){
-            return cb({"ERROR" : "Email is empty"});
-        }
-        let whereStr = {"email": user.getEmail()};
-        dbutils.get(userdb, whereStr, cb);
-    },
+	getUserByEmail: function(user, cb){
+		if(!user.getEmail()){
+			return cb({"ERROR" : "Email is empty"});
+		}
+		let whereStr = {"email": user.getEmail()};
+		dbutils.get(userdb, whereStr, cb);
+	},
 
-    getAllUsers: function(cb){
-        dbutils.getAll(userdb, function(result){
-            if(result[0].username){
-                for(let i = 0; i < result.length; i ++){
-                    if(result[i].role === "admin"){
-                        result.splice(i,1);
-                    }
-                }
-            }
+	getAllUsers: function(cb){
+		dbutils.getAll(userdb, function(result){
+			if(result[0].username){
+				for(let i = 0; i < result.length; i ++){
+					if(result[i].role === "admin"){
+						result.splice(i,1);
+					}
+				}
+			}
 
-            cb(result);
-        });
-    }
+			cb(result);
+		});
+	}
 }
 
 module.exports = userDao;

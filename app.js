@@ -11,6 +11,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
 var files = require('./routes/files');
+var utils = require('./utils/util');
 
 var app = express();
 
@@ -70,5 +71,7 @@ app.use(function(err, req, res, next) {
     res.render('error');
   }
 });
+
+utils.mkdir("upload/tmp");
 
 module.exports = app;

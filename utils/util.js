@@ -55,6 +55,24 @@ let utils = {
 		return mkdirsSync(dir);
 	},
 
+	fileType: function(filename){
+		const img = ['bmp', 'tiff', 'gif', 'jpeg', 'jpg', 'png'];
+		const mov = ['mp4', 'avi', 'mov', 'wmv', 'mkv', 'flv', 'rmvb'];
+		const msc = ['mp3', 'wma', 'ape', 'flac', 'wva'];
+
+		let type = filename.split('.');
+		type = type[type.length -1];
+		if(img.includes(type)){
+			return 'image';
+		}else if(mov.includes(type)){
+			return 'movie';
+		}else if(msc.includes(type)){
+			return 'music';
+		}else{
+			return 'document';
+		}
+	},
+
 	formatArticle: function(article){
 			let pFlag = 0;
 			let res = "";

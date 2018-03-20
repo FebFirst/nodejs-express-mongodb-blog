@@ -34,6 +34,13 @@ let fileDao = {
         dbutils.get(filedb, whereStr, cb);
     },
 
+    getFileByType: function(file, cb){
+        if(!file.type)
+            return cb({"ERROR" : "File type is empty"});
+        let whereStr = {"type": file.type};
+        dbutils.get(filedb, whereStr, cb);
+    },
+
     getAllFiles: function(cb){
         dbutils.getAll(filedb, function(result){
             cb(result);

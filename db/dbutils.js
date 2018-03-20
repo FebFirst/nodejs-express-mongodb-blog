@@ -120,7 +120,6 @@ module.exports = {
     get : function(dbconfig, whereStr, cb){
         client.connect(dbconfig.dbString, function(err, db){
             getData(db, dbconfig, whereStr, function(result){
-                console.log(result);
                 cb(result);
                 db.close();
             });

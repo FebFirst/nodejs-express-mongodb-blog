@@ -42,6 +42,18 @@ module.exports = {
 		}).timeout(3000);
 	}, 
 
+	getSpecifyCol: function(whereStr, filter){
+		return new Promise(function(resolve, reject){
+			articleDao.getSpecifyCol({}, filter, function(resl){
+				if(resl.ERROR){
+					reject(new Error(resl.ERROR));
+				}else{
+					resolve({data: resl,articles: arts});
+				}
+			});
+		});
+	},
+
 	addArticle: function(art){
 		return new Promise(function(resolve){
 			articleDao.addArticle(art, function(result){
