@@ -24,10 +24,10 @@ module.exports = function(app){
 		let content = req.body.content;
 		let file = req.file;
 		fileService.saveFile(file, content).then(function(result){
-			console.log(result);
+			//console.log(result);
 			res.send('OK');
 		}).catch(function(err){
-			console.log(err);
+			//console.log(err);
 			next(err);
 		});
 	});
@@ -36,6 +36,15 @@ module.exports = function(app){
 	app.get("/image/:name", function(req, res, next){
 		fileService.getImage(req.params.name).then(function(result){
 			res.send(result);
+		}).catch(function(err){
+			next(err);
+		});
+	});
+
+
+	app.get("/image/:date1/:date2", function(req, res, next){
+		fileService.selectFileBydate('image', req.params.date1, req.params.date2).then(function(result){
+			res.render('image', {images: result});
 		}).catch(function(err){
 			next(err);
 		});

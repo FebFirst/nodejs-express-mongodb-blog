@@ -39,7 +39,13 @@ let utils = {
 		let dateStr = date.getFullYear() + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec;
 
 		return dateStr;
-    },
+		},
+		
+	dateFromDB: function(date){
+		let tmp = date.split(' ');
+		// let ary = tmp[0].split('/');
+		return tmp[0];
+	},
 
 	dateString: function(){
 		let date = new Date();

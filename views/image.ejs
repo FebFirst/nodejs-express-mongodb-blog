@@ -57,6 +57,21 @@
 
 					<!-- Two -->
 						<section class="wrapper style1 container special">
+							<div class="content">
+								<div class="row 50%">
+									<div class="3u 12u(mobile)">
+										<input type="date" name="date" id="date1" />
+									</div>
+									<div class="3u 12u(mobile)">
+										<input type="date" name="date" id="date2" />
+									</div>
+									<div class="1u 12u(mobile)">
+										<input type="submit" style="min-width:8em; line-height:2.5em" class="btn btn-default" value="搜索" onclick="selectImg()" />
+										<!-- <button class="btn btn-default" onclick="selectImg()">搜索</button> -->
+									</div>
+
+								</div>
+							</div>
 							<%for(var i = 0; i < images.length; i +=3){%>
 
 							<div class="row">
@@ -128,6 +143,20 @@
 			<!-- Bootstrap Core JavaScript -->
 			<script src="/javascripts/bootstrap.min.js"></script>
 
+			<script>
+				function selectImg(){
+					var date1 = $("#date1").val();
+					var date2 = $("#date2").val();
+
+					if(!date1 || !date2){
+						console.log(date1);
+						console.log(date2);
+						return;
+					}
+					
+					window.location.href = "/image/" + date1 + "/" + date2;
+				}
+			</script>
 
 	</body>
 </html>

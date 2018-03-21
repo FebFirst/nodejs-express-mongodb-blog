@@ -18,7 +18,7 @@ module.exports = {
 			fname = date.getTime() + "." + fname;
 			path =  filedir + "/" + fname;
 			let dbfile = new File(file.originalname, utils.fileType(file.originalname),path, utils.dateNow(), content);
-			console.log(dbfile.toJSON());
+			//console.log(dbfile.toJSON());
 			fileDao.addFile(dbfile, function(result){
 				if(result.ERROR){
 					reject(new Error(result.ERROR));
@@ -49,11 +49,34 @@ module.exports = {
 		let file = new File('', type,'', '', '');
 		return new Promise(function(resolve, reject){
 			fileDao.getFileByType(file, function(result){
-				console.log(result);
+				//console.log(result);
 				if(result.length === 0 || result.ERROR){
 					reject(new Error("Not found"));
 				}else{
 					resolve(result);
+				}
+			});
+		}).timeout(3000);
+	},
+
+	selectFileBydate: function(type, date1, date2){
+		let file = new File('', type,'', '', '');
+		let d1 = date1.replace(new RegExp('-', 'g'), '/');
+		let d2 = date2.replace(new RegExp('-', 'g'), '/');
+		return new Promise(function(resolve, reject){
+			fileDao.getFileByType(file, function(result){
+				if(result.ERROR){
+					resolve(new Error(result.ERROR));
+				}else{
+					let fileAry = [];
+					let fldt = '';
+					for(let i = 0; i < result.length; i ++){
+						fldt = utils.dateFromDB(result[i].date);
+						if(fldt >= d1 && fldt <= d2){
+							fileAry.push(result[i]);
+						}
+					}
+					resolve(fileAry);
 				}
 			});
 		}).timeout(3000);
