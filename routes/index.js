@@ -22,7 +22,7 @@ module.exports = function(app){
   app.get('/article.html',  function(req, res, next){
     let filter = {'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5};
     articleService.getSpecifyCol({}, filter).then(function(result){
-      res.render('article',{data: result, articles: -1});
+      res.render('article',result);
     }).catch(function(err){
       next(err);
     });

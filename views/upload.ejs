@@ -163,11 +163,8 @@
 					}
 					var content = $("#content").val();
 					var data = new FormData();
-					console.log(typeof img);
-					console.log(img);
 					data.append("file", img);
 					data.append("content", content);
-					console.log(data.getAll("file"));
 					var url = "/image/upload";
 
 					$.ajax({
