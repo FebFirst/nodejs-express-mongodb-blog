@@ -38,8 +38,12 @@ module.exports = {
 				if(result.length === 0){
 					reject(new Error("Not found"));
 				}else{
+					try{
 					let res = fs.readFileSync(result[0].path);
 					resolve(res);
+					}catch(err){
+						reject(err);
+					}
 				}
 			});
 		}).timeout(3000);
