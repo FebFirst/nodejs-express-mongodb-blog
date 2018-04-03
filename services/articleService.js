@@ -1,56 +1,63 @@
 const Promise = require('bluebird');
 const Article = require('../models/article');
+const Comment = require('../models/comment');
 const articleDao = require('../dao/articledao');
+const commentDao = require('../dao/commentdao');
 const Utils = require('../utils/util');
+
 
 
 module.exports = {
 	getArticle: function(url){
 		let art = new Article(parseInt(url), '', '', '', '','');
-		return new Promise(function(resolve, reject){
-			articleDao.getArticle(art, function(result){
-				if(result.length === 0){
+		let cmt = new Comment(url,'','','');
+		let filter = {'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5};
+		return new Promise(async function(resolve, reject){
+			try{
+				let articles = await articleDao.getArticle(art);
+				let comments = await commentDao.getComment(cmt);
+				let latestArt = await articleDao.getSpecifyCol({}, filter);
+				if(articles.length === 0){
 					reject(new Error('Article Not Found'));
 				}else{
 					let articleData = [];
-					articleData.push({title: result[0].title,time:result[0].time, url:result[0].url, content: result[0].content.split("\n")});
-					let filter = {'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5};
-					articleDao.getSpecifyCol({}, filter, function(resl){
-						resolve({data: resl, articles: articleData});
-					});
+					articleData.push({title: articles[0].title,time:articles[0].time, url:articles[0].url, content: articles[0].content.split("\n"), 'comments': comments});
+					resolve({'data': latestArt, 'articles': articleData});
 				}
-		});
-		}).timeout(3000);
+			}catch(err){
+				reject(err);
+			}
+		}).timeout(6000);
 	},
 
 	getArticleByCate: function(cate){
-		return new Promise(function(resolve, reject){
+		return new Promise(async function(resolve, reject){
 			let filter = {'projection':{author: 0, category: 0, content: 0}, 'sort':{time: -1}, limit: 5};
-			articleDao.getArticleByCate(cate, function(result){
+			try{
+				let result = await articleDao.getArticleByCate(cate);
+				let latestArt = await articleDao.getSpecifyCol({}, filter);
 				if(result.length === 0){
 					reject(new Error('No Such Category'));
-				}else{
-					let arts = [];
-					for(art in result){
-						arts.push({title: result[art].title,time:result[art].time, url:result[art].url, content: result[art].content.split("\n")});
-					}
-					articleDao.getSpecifyCol({}, filter, function(resl){
-						resolve({data: resl,articles: arts});
-					});
 				}
-			});
+				let arts = [];
+				for(art in result){
+					arts.push({title: result[art].title,time:result[art].time, url:result[art].url, content: result[art].content.split("\n")});
+				}
+				resolve({data: latestArt,articles: arts});
+			}catch(err){
+				reject(err);
+			}
 		}).timeout(3000);
 	}, 
 
 	getSpecifyCol: function(whereStr, filter){
 		return new Promise(function(resolve, reject){
-			articleDao.getSpecifyCol({}, filter, function(resl){
-				if(resl.ERROR){
-					reject(new Error(resl.ERROR));
-				}else{
-					resolve({data: resl,articles: - 1});
-				}
-			});
+			let latestArt = await articleDao.getSpecifyCol({}, filter);
+			if(latestArt.ERROR){
+				reject(new Error(latestArt.ERROR));
+			}else{
+				resolve({data: latestArt, articles: -1});
+			}
 		});
 	},
 

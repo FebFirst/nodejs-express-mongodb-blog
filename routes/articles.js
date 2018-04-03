@@ -9,6 +9,8 @@ module.exports = function(app){
           res.render('article' , data);
         }).catch(function(err){
           next(err);
+          // console.error(err);
+          //next(new Error("kkkk"));
         });
       });
     

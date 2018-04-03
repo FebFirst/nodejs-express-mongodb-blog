@@ -1,5 +1,6 @@
 let dbutils = require('../db/dbutils');
 let dbconfig = require('../db/dbconfig');
+let Promise = require('bluebird');
 
 let articledb = {'dbString': dbconfig.path + ':' + dbconfig.port, 'schema':dbconfig.schema, 'table':dbconfig.articletable};
 
@@ -28,14 +29,24 @@ let articledao = {
     dbutils.update(articledb, whereStr, data, cb);
   },
 
-  getArticle: function(article, cb){
+  getArticle: function(article){
     let whereStr = {'url': article.url};
-    dbutils.get(articledb, whereStr, cb);
+    return new Promise(function(resolve){
+      dbutils.get(articledb, whereStr, function(result){
+        resolve(result);
+      });
+    }).timeout(3000);
+    
   },
 
-  getArticleByCate : function(category, cb){
+  getArticleByCate : function(category){
     let whereStr = {'category': category};
-    dbutils.get(articledb, whereStr, cb);
+    return new Promise(function(resolve){
+      dbutils.get(articledb, whereStr,function(result){
+        resolve(result);
+      });
+    })
+    
   },
 
   getAll: function(cb){
@@ -44,10 +55,13 @@ let articledao = {
     });
   },
 
-  getSpecifyCol: function(whereStr, colStr, cb){
-    dbutils.getSpecifyCol(articledb, whereStr, colStr, function(result){
-      cb(result);
-    });
+  getSpecifyCol: function(whereStr, colStr){
+    return new Promise(function(resolve){
+      dbutils.getSpecifyCol(articledb, whereStr, colStr, function(result){
+        resolve(result);
+      });
+    }).timeout(3000);
+    
   }
 }
 

@@ -1,42 +1,43 @@
-# nodejs-express-mongodb-sample
-A blog based on nodejs
+# nodejs-express-mongodb-blog
+
+### A blog based on nodejs
+
+## code structure
++ db
+
+>> dbconfig.js  database configration file
+
+>> dbutils.js   database connection tool
 
 
-db
++ dao
 
--dbconfig.js  database configration file
-
--dbutils.js   database connection tool
+>> userdao.js   JAVA style database access object file
 
 
-dao
++ services
 
--userdao.js   JAVA style database access object file
-
-
-services
-
--articleService.js  JAVA style service file
+>> articleService.js  JAVA style service file
 
 
 
-models
++ models
 
--user.js      user model class
-
-
-other files are created automaticly by express.
+>> user.js      user model class
 
 
-Usage:
-
-git clone https://github.com/FebFirst/nodejs-express-mongodb-sample.git
-
-cd this directory then type command below:
-
-npm install
-
-npm start
++ other files are created automaticly by express.
 
 
-Before that you should modify dbconfig.js to match your own db settings.
+## Usage:
+
++ git clone https://github.com/FebFirst/nodejs-express-mongodb-sample.git
+
++ modify dbconfig.js to match your own db settings.
+
++ cd this directory then type command below:
+
+>>npm install
+
+>>npm start
+

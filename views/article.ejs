@@ -63,13 +63,6 @@
 									<!-- Sidebar -->
 										<div class="sidebar">
 											<section>
-												<!-- <ul class="list-group">
-													<li class="list-group-item">IntelliJ 下配置springMVC，使用JBoss作为服务器</li>
-													<li class="list-group-item">IntelliJ 下配置springMVC，使用JBoss作为服务器</li>
-													<li class="list-group-item">IntelliJ 下配置springMVC，使用JBoss作为服务器</li>
-													<li class="list-group-item">IntelliJ 下配置springMVC，使用JBoss作为服务器</li>
-													<li class="list-group-item">IntelliJ 下配置springMVC，使用JBoss作为服务器</li>
-												</ul> -->
 												<div class="list-group" >
 													<a href="#" class="list-group-item" style="border: 0px solid transparent"><h3>最近博客</h3></a>
 													<% for(var i = 0; i < data.length; i ++){ %>
@@ -111,6 +104,34 @@
 													<%}%>
 												</p>
 												<h5 style="text-align: right"><%=articles[index].time%></h5>
+												<%}if(articles.length ===1){for(var j = 0; j < articles[0].comments.length; j ++){%>
+													<h2><%=articles[0].comments[j].email%></h2><h5><%=articles[0].comments[j].time%></h5>
+													<p><%=articles[0].comments[j].content%></p>
+													<%}%>
+												<form action="/comment" method="POST">
+													<div class="row 50%" style="display: none">
+														<div class="12u">
+															<input type="text" name="articleId" readonly="readonly" style="display: none" value="<%=articles[0].url%>"/>
+														</div>
+													</div>
+													<div class="row 50%">
+														<div class="12u">
+															<input type="email" name="email" placeholder="Email" />
+														</div>
+													</div>
+													<div class="row 50%">
+														<div class="12u">
+															<textarea name="content" placeholder="Content" rows="7"></textarea>
+														</div>
+													</div>
+													<div class="row">
+														<div class="12u" style="text-align: right">
+															<ul class="buttons">
+																<li><input type="submit" class="special" value="发表评论" style="min-width:8em; line-height:2.5em"/></li>
+															</ul>
+														</div>
+													</div>
+												</form>
 												<br/><br/>
 												<%}} else{%>
 												<header>

@@ -5,5 +5,6 @@ module.exports = {
     usertable : 'user',
     articletable: 'article',
     filetable: 'file',
+    commenttable: 'comment',
     passwd: ''
 }

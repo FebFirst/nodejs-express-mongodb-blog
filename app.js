@@ -59,11 +59,11 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
 
   if(err instanceof Promise.TimeoutError){
-    res.status(404);
-    res.locals.message = err.message;
+    //res.status(404);
+    res.locals.error = err;
     res.render('error');
   }else{
-    res.locals.message = err.message;
+    res.locals.message = err.message || "Unknown Error";
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page
