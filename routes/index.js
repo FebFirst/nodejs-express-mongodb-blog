@@ -4,7 +4,7 @@ const fileService = require('../services/fileService');
 
 
 module.exports = function(app){
-  app.get('/', function(req, res, next) {
+  app.get('/', function(req, res) {
     res.render('index', { title: 'Express' });
   });
 
@@ -14,9 +14,10 @@ module.exports = function(app){
 
   app.get('/write.html', function(req, res){
     if(req.session.user){   
-      return res.render('write');
+      res.render('write');
+    }else{
+      res.redirect('login.html');
     }
-    return res.redirect('login.html');
   });
 
   app.get('/article.html',  function(req, res, next){
@@ -51,8 +52,9 @@ module.exports = function(app){
 
   app.get('/upload.html', function(req, res){
     if(req.session.user){   
-      return res.render('upload');
+      res.render('upload');
+    }else{
+     res.redirect('login.html');
     }
-    return res.redirect('login.html');
   });
 }

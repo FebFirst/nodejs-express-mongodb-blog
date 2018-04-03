@@ -40,7 +40,7 @@ app.use(function(req, res, next){
   var err = req.session.error;
   res.locals.message = '';
   if (err) res.locals.message = '<div style="margin-bottom: 20px;color:red;">' + err + '</div>';
-  next();
+  next(err);
 });
 
 index(app);
@@ -50,11 +50,11 @@ files(app);
 comments(app);
 
 // // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
+app.use(function( req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 // error handler
 app.use(function(err, req, res, next) {
