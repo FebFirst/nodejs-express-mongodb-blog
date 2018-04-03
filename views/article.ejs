@@ -96,7 +96,6 @@
 													
 												<header>
 													<a href="/article/<%=articles[index].url%>"><h3><%=articles[index].title%></h3></a>
-													
 													<br/>
 												</header>
 												<p><%for(var i = 0; i < articles[index].content.length; i ++){%>
@@ -104,12 +103,16 @@
 													<%}%>
 												</p>
 												<h6 style="text-align: right"><%=articles[index].time%></h6>
-												<%}if(articles.length ===1){%>
-													<div>
+												<%}if(articles.length ===1){if(articles[0].comments.length !== 0){%>
+													<div class="row">
 														<h5>《<%=articles[0].title%>》下的<%=articles[0].comments.length%>条评论：</h5>
 													</div>
+													<%}else{%>
 													<div class="row">
-												<%for(var j = 0; j < articles[0].comments.length; j ++){%>
+														<h5>《<%=articles[0].title%>》下没有评论。</h5>
+													</div>
+												<div class="row">
+												<%}for(var j = 0; j < articles[0].comments.length; j ++){%>
 													
 													<div class="12u">
 														<div>
@@ -124,7 +127,11 @@
 											
 													<%}%>
 												</div>
-												<!-- <form action="/comment" method="POST"> -->
+												
+												<div>
+													<div>
+														<h5>发表评论：</h5>
+													</div>
 													<div class="row " style="display: none">
 														<div class="12u">
 															<input type="text" name="articleId" id="articleId" readonly="readonly" style="display: none" value="<%=articles[0].url%>"/>
@@ -147,6 +154,7 @@
 															</ul>
 														</div>
 													</div>
+												</div>
 												<!-- </form> -->
 												<br/><br/>
 												<%}} else{%>
