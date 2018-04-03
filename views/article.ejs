@@ -103,35 +103,51 @@
 													<%=articles[index].content[i]%><br/>
 													<%}%>
 												</p>
-												<h5 style="text-align: right"><%=articles[index].time%></h5>
-												<%}if(articles.length ===1){for(var j = 0; j < articles[0].comments.length; j ++){%>
-													<h2><%=articles[0].comments[j].email%></h2><h5><%=articles[0].comments[j].time%></h5>
-													<p><%=articles[0].comments[j].content%></p>
+												<h6 style="text-align: right"><%=articles[index].time%></h6>
+												<%}if(articles.length ===1){%>
+													<div>
+														<h5>《<%=articles[0].title%>》下的<%=articles[0].comments.length%>条评论：</h5>
+													</div>
+													<div class="row">
+												<%for(var j = 0; j < articles[0].comments.length; j ++){%>
+													
+													<div class="12u">
+														<div>
+														<b class="6u" style="float: left"><%=articles[0].comments[j].email%>: </b>
+														<span class="6u" style="font-size: small; float: right; text-align: right"><%=articles[0].comments[j].time%></span>
+														</div>
+													
+														<div class="12u"><p ><%=articles[0].comments[j].content%></p>
+															
+														</div>
+													</div>
+											
 													<%}%>
-												<form action="/comment" method="POST">
-													<div class="row 50%" style="display: none">
+												</div>
+												<!-- <form action="/comment" method="POST"> -->
+													<div class="row " style="display: none">
 														<div class="12u">
-															<input type="text" name="articleId" readonly="readonly" style="display: none" value="<%=articles[0].url%>"/>
+															<input type="text" name="articleId" id="articleId" readonly="readonly" style="display: none" value="<%=articles[0].url%>"/>
 														</div>
 													</div>
 													<div class="row 50%">
 														<div class="12u">
-															<input type="email" name="email" placeholder="Email" />
+															<input type="email" name="email" id="email" placeholder="Email" />
 														</div>
 													</div>
 													<div class="row 50%">
 														<div class="12u">
-															<textarea name="content" placeholder="Content" rows="7"></textarea>
+															<textarea name="content" id= "content" placeholder="Content" rows="7"></textarea>
 														</div>
 													</div>
 													<div class="row">
 														<div class="12u" style="text-align: right">
 															<ul class="buttons">
-																<li><input type="submit" class="special" value="发表评论" style="min-width:8em; line-height:2.5em"/></li>
+																<li><input type="submit" class="btn btn-default" value="发表评论" style="min-width:8em; line-height:2.5em" onclick="comment()"/></li>
 															</ul>
 														</div>
 													</div>
-												</form>
+												<!-- </form> -->
 												<br/><br/>
 												<%}} else{%>
 												<header>
@@ -182,7 +198,33 @@
 
 
 			<script>
+				function comment(){
+					var articleId = $("#articleId").val();
+					var email = $("#email").val();
+					var content = $("#content").val();
 
+					if(!articleId || !email || !content){
+						return;
+					}
+					var url = "/comment";
+					var data = {"articleId": articleId, "email": email, "content": content};
+					$.ajax({
+					"type": "POST",
+					"url": url,
+					"contentType": "application/json",
+					"data": JSON.stringify(data),
+					"dataType": "json",
+					"success":function (info) {
+						// console.log(JSON.stringify(info));
+						// console.log(info.ERROR);
+						if(info.ERROR)
+							document.getElementById("msg").innerHTML = info.ERROR;
+						else{
+							window.location.href = "/article/" + articleId;
+						}
+					}
+				});
+				}
 			</script>
 	</body>
 </html>

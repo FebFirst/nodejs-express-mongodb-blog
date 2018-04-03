@@ -51,7 +51,7 @@ module.exports = {
 	}, 
 
 	getSpecifyCol: function(whereStr, filter){
-		return new Promise(function(resolve, reject){
+		return new Promise(async function(resolve, reject){
 			let latestArt = await articleDao.getSpecifyCol({}, filter);
 			if(latestArt.ERROR){
 				reject(new Error(latestArt.ERROR));
