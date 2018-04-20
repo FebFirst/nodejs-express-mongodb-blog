@@ -103,7 +103,7 @@
 													<%}%>
 												</p>
 												<h6 style="text-align: right"><%=articles[index].time%></h6>
-												<%}if(articles.length ===1){if(articles[0].comments.length !== 0){%>
+												<%}if(articles.length ===1 && articles[0].hasOwnProperty('comments')){if(articles[0].comments.length !== 0){%>
 													<div class="row">
 														<h5>《<%=articles[0].title%>》下的<%=articles[0].comments.length%>条评论：</h5>
 													</div>
